@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+:root {
+  --ink: #14110e;
+  --ink-2: #1e1a16;
+  --ink-3: #2a241e;
+  --paper: #f4ecd8;
+  --panel: #1a1612;
+  --muted: #9a8d7a;
+  --brass: #d4a054;
+  --blood: #c44536;
+  --hairline: color-mix(in oklab, var(--paper) 12%, transparent);
+  --rule: #e0d3b6;
+  --background: var(--ink);
+  --foreground: var(--paper);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+}
+
+html,
+body {
+  background: var(--ink);
+  color: var(--paper);
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-image:
+    radial-gradient(ellipse at top, #2a2016 0%, transparent 52%),
+    radial-gradient(ellipse at bottom, #0a0908 0%, var(--ink) 70%);
+}
+
+.font-display {
+  font-family: var(--font-fraunces), var(--font-display);
+  font-optical-sizing: auto;
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+::selection {
+  background: var(--brass);
+  color: var(--ink);
+}
