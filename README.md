@@ -45,8 +45,6 @@ make build
 
 Whistle into the big button. Stop. Share the MIDI into Files, Mail, or a DAW. Tap a note in the roll if the detector guessed wrong.
 
-**Speak** (top right) types a line and how to say it. Grok writes a 48 kHz WAV you can play or share into a session. The API key is saved in the phone’s keychain the first time. The whistle itself still never leaves the phone.
-
 **Import MIDI** from Files (or share a `.mid` into Whistler). It loads the notes, shows staff/tab, and plays them. Drum tracks are skipped.
 
 Source modes: **Whistle** (default, 480 Hz–4.2 kHz), **Hum**, **Any**.
@@ -76,4 +74,4 @@ Safari on a phone will **not** get the microphone over plain `http://` on the LA
 
 [MIT](./LICENSE) © 2026 NightMoose, Inc.
 
-Whistler is not affiliated with Google or xAI. "Grok" is a trademark of xAI.
+Whistler is not affiliated with Google.
