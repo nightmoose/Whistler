@@ -6,7 +6,6 @@ struct RootView: View {
     @State private var midiURL: URL?
     @State private var copied = false
     @State private var importing = false
-    @State private var showSpeak = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -54,9 +53,6 @@ struct RootView: View {
             guard isMIDI(url) else { return }
             session.importMIDI(from: url)
         }
-        .sheet(isPresented: $showSpeak) {
-            SpeakSheet()
-        }
     }
 
     private var header: some View {
@@ -74,15 +70,6 @@ struct RootView: View {
                     .foregroundStyle(Theme.muted)
                     .fixedSize(horizontal: false, vertical: true)
             }
-            Spacer(minLength: 8)
-            Button("Speak") { showSpeak = true }
-                .font(.system(size: 15, weight: .semibold))
-                .padding(.horizontal, 14)
-                .padding(.vertical, 8)
-                .background(Theme.brass, in: Capsule())
-                .foregroundStyle(Theme.ink)
-                .buttonStyle(.plain)
-                .accessibilityLabel("Speak a line")
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 20)

@@ -7,25 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0833382C43E23C6B01EDABF2 /* SpeakModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9346B7E3B445471FC4C7C03 /* SpeakModel.swift */; };
 		2208B7BECA2FDB790F8A48D9 /* Yin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E8C5BB58B3C20A247EE965 /* Yin.swift */; };
 		2A1575F82EF3E6F37DC49CFA /* WhistleSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F9C22C84EB6F7C3D390F39 /* WhistleSession.swift */; };
 		2F659150C2EB0138C5D72A93 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 397DCBE01A35EE55C8D30F44 /* Assets.xcassets */; };
 		36A62ADD80E32ED2D1AC26A1 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90482C807E36AC8D5BE2FE76 /* RootView.swift */; };
 		3EC967B9CCDB4A17048B751F /* WhistlerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947A81EF50A26ABB2F44408C /* WhistlerApp.swift */; };
 		4A0CCF35C4187C6268CE8ECF /* TranscribeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FD5556824A7AF90DD9C969 /* TranscribeTests.swift */; };
-		6297E7FDC24A486E47241BF3 /* SpeechTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB2B38A9A927A8D0EFBE1E1 /* SpeechTests.swift */; };
 		69AFFD00301D7B7948F0E280 /* MIDIFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FF58F23554D9E7A912E44A /* MIDIFile.swift */; };
 		6A6D3B8C32DCDA143E90DDD1 /* Transcribe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94DE18908E4FF154548FFAE /* Transcribe.swift */; };
 		781000068006D07C037C906C /* Notes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DB7DF26251A218E35E0BBC /* Notes.swift */; };
 		8B123E98B161920071917342 /* Recorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5532B1B0AFDD2D64B32B8B8 /* Recorder.swift */; };
-		A30053A9542434134043BD95 /* SpeakSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C15BD38E7E7C10FC916913 /* SpeakSheet.swift */; };
 		A98BE2F7CB42C8AEFCC78464 /* Playback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C0ECF2E1B612235AE1E1FE /* Playback.swift */; };
-		AAC5426853C68FFC05CD19F5 /* APIKeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B7CA3AE167CD4537FE2BD3 /* APIKeyStore.swift */; };
 		AD9D8FBE2875CFAAF50BDC3C /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056D29B1F7FF2F23AAFDED5F /* Theme.swift */; };
 		BDA0BB24DBCB986B2006F9A8 /* Synth.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D4A2CF2F2489E2BCA37854 /* Synth.swift */; };
-		D8A8AD6D8A8429B4CE05B71E /* SpeechClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 312BBD6BA02B92F477C7F455 /* SpeechClient.swift */; };
-		D8BF953366FB1A7495872193 /* SpeechMarkup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4412F08A76DEB3F0D22FCCFB /* SpeechMarkup.swift */; };
 		EAD1681D40D55F0A1E377BB7 /* Autotune.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F05609A277B34C678AFE879 /* Autotune.swift */; };
 		FCF9C50F3889741571EBA5C7 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CACF8A99E8B1B86A0ACC812 /* Tab.swift */; };
 /* End PBXBuildFile section */
@@ -43,10 +37,8 @@
 /* Begin PBXFileReference section */
 		056D29B1F7FF2F23AAFDED5F /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		233A240A888F160996C7BACE /* Whistler.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Whistler.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		312BBD6BA02B92F477C7F455 /* SpeechClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechClient.swift; sourceTree = "<group>"; };
 		37E8C5BB58B3C20A247EE965 /* Yin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Yin.swift; sourceTree = "<group>"; };
 		397DCBE01A35EE55C8D30F44 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		4412F08A76DEB3F0D22FCCFB /* SpeechMarkup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechMarkup.swift; sourceTree = "<group>"; };
 		45DB7DF26251A218E35E0BBC /* Notes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notes.swift; sourceTree = "<group>"; };
 		4CACF8A99E8B1B86A0ACC812 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		54FF58F23554D9E7A912E44A /* MIDIFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MIDIFile.swift; sourceTree = "<group>"; };
@@ -54,14 +46,10 @@
 		7F05609A277B34C678AFE879 /* Autotune.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Autotune.swift; sourceTree = "<group>"; };
 		90482C807E36AC8D5BE2FE76 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		91E991C714E57E2966C45D47 /* WhistlerTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = WhistlerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		92B7CA3AE167CD4537FE2BD3 /* APIKeyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeyStore.swift; sourceTree = "<group>"; };
 		947A81EF50A26ABB2F44408C /* WhistlerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhistlerApp.swift; sourceTree = "<group>"; };
 		A0D4A2CF2F2489E2BCA37854 /* Synth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Synth.swift; sourceTree = "<group>"; };
-		ABB2B38A9A927A8D0EFBE1E1 /* SpeechTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechTests.swift; sourceTree = "<group>"; };
 		B7FD5556824A7AF90DD9C969 /* TranscribeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscribeTests.swift; sourceTree = "<group>"; };
-		B9346B7E3B445471FC4C7C03 /* SpeakModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakModel.swift; sourceTree = "<group>"; };
 		D5532B1B0AFDD2D64B32B8B8 /* Recorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recorder.swift; sourceTree = "<group>"; };
-		D8C15BD38E7E7C10FC916913 /* SpeakSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakSheet.swift; sourceTree = "<group>"; };
 		D94DE18908E4FF154548FFAE /* Transcribe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transcribe.swift; sourceTree = "<group>"; };
 		E1F9C22C84EB6F7C3D390F39 /* WhistleSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhistleSession.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -106,17 +94,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		53B957A8FEC559F2155EF86F /* Speech */ = {
-			isa = PBXGroup;
-			children = (
-				92B7CA3AE167CD4537FE2BD3 /* APIKeyStore.swift */,
-				B9346B7E3B445471FC4C7C03 /* SpeakModel.swift */,
-				312BBD6BA02B92F477C7F455 /* SpeechClient.swift */,
-				4412F08A76DEB3F0D22FCCFB /* SpeechMarkup.swift */,
-			);
-			path = Speech;
-			sourceTree = "<group>";
-		};
 		549383D347EFFDE9B3A9CE5A = {
 			isa = PBXGroup;
 			children = (
@@ -130,7 +107,6 @@
 			isa = PBXGroup;
 			children = (
 				90482C807E36AC8D5BE2FE76 /* RootView.swift */,
-				D8C15BD38E7E7C10FC916913 /* SpeakSheet.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -156,7 +132,6 @@
 		BC7D8BCF99F0EF9CDFEF45DA /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				ABB2B38A9A927A8D0EFBE1E1 /* SpeechTests.swift */,
 				B7FD5556824A7AF90DD9C969 /* TranscribeTests.swift */,
 			);
 			path = Tests;
@@ -170,7 +145,6 @@
 				81B0B081CA6618683EE7A6CA /* Music */,
 				42EE32A43B00CC5E5C6F9902 /* Resources */,
 				257051E2424EEB098A8F8A09 /* Session */,
-				53B957A8FEC559F2155EF86F /* Speech */,
 				7E1BC4DECEFFBA94580EA964 /* Views */,
 			);
 			path = Sources;
@@ -270,7 +244,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6297E7FDC24A486E47241BF3 /* SpeechTests.swift in Sources */,
 				4A0CCF35C4187C6268CE8ECF /* TranscribeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -279,17 +252,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AAC5426853C68FFC05CD19F5 /* APIKeyStore.swift in Sources */,
 				EAD1681D40D55F0A1E377BB7 /* Autotune.swift in Sources */,
 				69AFFD00301D7B7948F0E280 /* MIDIFile.swift in Sources */,
 				781000068006D07C037C906C /* Notes.swift in Sources */,
 				A98BE2F7CB42C8AEFCC78464 /* Playback.swift in Sources */,
 				8B123E98B161920071917342 /* Recorder.swift in Sources */,
 				36A62ADD80E32ED2D1AC26A1 /* RootView.swift in Sources */,
-				0833382C43E23C6B01EDABF2 /* SpeakModel.swift in Sources */,
-				A30053A9542434134043BD95 /* SpeakSheet.swift in Sources */,
-				D8A8AD6D8A8429B4CE05B71E /* SpeechClient.swift in Sources */,
-				D8BF953366FB1A7495872193 /* SpeechMarkup.swift in Sources */,
 				BDA0BB24DBCB986B2006F9A8 /* Synth.swift in Sources */,
 				FCF9C50F3889741571EBA5C7 /* Tab.swift in Sources */,
 				AD9D8FBE2875CFAAF50BDC3C /* Theme.swift in Sources */,
