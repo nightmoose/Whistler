@@ -5,6 +5,8 @@ options:
     iOS: "17.0"
   xcodeVersion: "16.0"
   createIntermediateGroups: true
+fileGroups:
+  - Whistler.storekit
 settings:
   base:
     SWIFT_VERSION: "5.9"
@@ -80,6 +82,8 @@ schemes:
         WhistlerTests: [test]
     run:
       config: Debug
+      # Local StoreKit testing so simulator/debug purchases of Pro work without App Store Connect.
+      storeKitConfiguration: Whistler.storekit
     test:
       config: Debug
       targets:
