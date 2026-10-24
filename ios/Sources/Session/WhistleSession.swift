@@ -8,6 +8,16 @@ final class WhistleSession {
     var mode: SourceMode = .whistle {
         didSet { recorder.mode = mode }
     }
+    /// Mirrors ProStatus.isPro; set by the app.
+    var isPro = false {
+        didSet {
+            if !isPro, !Gate(isPro: false).allows(mode: mode) {
+                mode = .whistle
+            }
+        }
+    }
+    /// Set when the session wants the paywall shown (e.g. the free recording cap was hit).
+    var paywallTrigger: PaywallTrigger?
     var isRecording = false
     var isBusy = false
     var live: LivePitch = .empty
@@ -72,6 +82,7 @@ final class WhistleSession {
         importedName = nil
         detectedKey = nil
         live = .empty
+        if !Gate(isPro: isPro).allows(mode: mode) { mode = .whistle }
         recorder.mode = mode
 
         let granted = await requestMic()
@@ -90,7 +101,7 @@ final class WhistleSession {
                     try? await Task.sleep(for: .milliseconds(100))
                     await MainActor.run {
                         if let started = self.startedAt, self.isRecording {
-                            self.elapsed = Date().timeIntervalSince(started)
+                            self.tick(elapsed: Date().timeIntervalSince(started))
                         }
                     }
                 }
@@ -98,6 +109,33 @@ final class WhistleSession {
         } catch {
             errorMessage = error.localizedDescription
         }
+    }
+
+    /// Updates the clock and enforces the free-tier cap: on hitting it the take is
+    /// stopped cleanly (and still transcribed) and the paywall is requested.
+    func tick(elapsed: TimeInterval) {
+        guard isRecording else { return }
+        if RecordingCap.shouldStop(elapsed: elapsed, isPro: isPro) {
+            self.elapsed = RecordingCap.freeLimit
+            stop()
+            paywallTrigger = PaywallTrigger(reason: .recordingCap)
+        } else {
+            self.elapsed = elapsed
+        }
+    }
+
+    /// Selects a source mode, or requests the paywall if it needs Pro.
+    /// Returns true if the mode was selected.
+    @discardableResult
+    func select(mode newMode: SourceMode) -> Bool {
+        guard Gate(isPro: isPro).allows(mode: newMode) else {
+            if let feature = newMode.proFeature {
+                paywallTrigger = PaywallTrigger(reason: .feature(feature))
+            }
+            return false
+        }
+        mode = newMode
+        return true
     }
 
     func stop() {

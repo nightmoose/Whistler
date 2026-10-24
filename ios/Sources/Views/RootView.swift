@@ -3,6 +3,8 @@ import UniformTypeIdentifiers
 
 struct RootView: View {
     @Environment(WhistleSession.self) private var session
+    @Environment(ProStatus.self) private var pro
+    @State private var redeeming = false
     @State private var midiURL: URL?
     @State private var copied = false
     @State private var importing = false
@@ -49,6 +51,14 @@ struct RootView: View {
                 session.errorMessage = error.localizedDescription
             }
         }
+        .sheet(item: paywallBinding) { trigger in
+            PaywallView(trigger: trigger)
+                .environment(pro)
+                .presentationDragIndicator(.visible)
+        }
+        .offerCodeRedemption(isPresented: $redeeming) { _ in
+            Task { await pro.redeemFinished() }
+        }
         .onOpenURL { url in
             guard isMIDI(url) else { return }
             session.importMIDI(from: url)
@@ -70,6 +80,34 @@ struct RootView: View {
                     .foregroundStyle(Theme.muted)
                     .fixedSize(horizontal: false, vertical: true)
             }
+            Spacer(minLength: 0)
+            Menu {
+                if pro.isPro {
+                    Label("Whistler Pro unlocked", systemImage: "checkmark.seal")
+                } else {
+                    Button {
+                        showPaywall(.browse)
+                    } label: {
+                        Label("Whistler Pro…", systemImage: "lock.open")
+                    }
+                }
+                Button {
+                    Task { await pro.restore() }
+                } label: {
+                    Label("Restore Purchases", systemImage: "arrow.clockwise")
+                }
+                Button {
+                    redeeming = true
+                } label: {
+                    Label("Redeem Code", systemImage: "giftcard")
+                }
+            } label: {
+                Image(systemName: "ellipsis.circle")
+                    .font(.system(size: 22))
+                    .foregroundStyle(Theme.brass)
+                    .padding(4)
+            }
+            .accessibilityLabel("More")
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 20)
@@ -155,35 +193,43 @@ struct RootView: View {
                 .font(.system(size: 11, weight: .semibold))
                 .tracking(2)
                 .foregroundStyle(Theme.muted)
-            ScrollView(.horizontal, showsIndicators: false) {
-                StaffView(notes: session.notes)
+            if pro.gate.allows(.staffNotation) {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    StaffView(notes: session.notes)
+                }
+                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                .background(Theme.paper, in: RoundedRectangle(cornerRadius: 16))
+            } else {
+                LockedPanel(feature: .staffNotation) { showPaywall(.feature(.staffNotation)) }
             }
-            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-            .background(Theme.paper, in: RoundedRectangle(cornerRadius: 16))
 
             Text("GUITAR TAB")
                 .font(.system(size: 11, weight: .semibold))
                 .tracking(2)
                 .foregroundStyle(Theme.muted)
-            VStack(alignment: .leading, spacing: 8) {
-                if let shift = session.tab.shiftLabel {
-                    Text(shift)
-                        .font(.system(size: 12))
-                        .foregroundStyle(Theme.muted)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .padding(.horizontal, 14)
-                        .padding(.top, 10)
-                }
-                ScrollView(.horizontal, showsIndicators: false) {
-                    Text(session.tab.ascii)
-                        .font(.system(size: 13, design: .monospaced))
-                        .foregroundStyle(Theme.inkText)
-                        .padding(14)
+            if pro.gate.allows(.guitarTab) {
+                VStack(alignment: .leading, spacing: 8) {
+                    if let shift = session.tab.shiftLabel {
+                        Text(shift)
+                            .font(.system(size: 12))
+                            .foregroundStyle(Theme.muted)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(.horizontal, 14)
+                            .padding(.top, 10)
+                    }
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        Text(session.tab.ascii)
+                            .font(.system(size: 13, design: .monospaced))
+                            .foregroundStyle(Theme.inkText)
+                            .padding(14)
+                    }
+                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                 }
                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                .background(Theme.paper, in: RoundedRectangle(cornerRadius: 16))
+            } else {
+                LockedPanel(feature: .guitarTab) { showPaywall(.feature(.guitarTab)) }
             }
-            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-            .background(Theme.paper, in: RoundedRectangle(cornerRadius: 16))
 
             actionRow
         }
@@ -202,11 +248,17 @@ struct RootView: View {
                     UIPasteboard.general.string = session.nameLine
                     copied = true
                 }
-                chip("Copy tab") {
-                    UIPasteboard.general.string = session.tab.ascii
-                    copied = true
+                if pro.gate.allows(.guitarTab) {
+                    chip("Copy tab") {
+                        UIPasteboard.general.string = session.tab.ascii
+                        copied = true
+                    }
+                } else {
+                    lockedChip("Copy tab", feature: .guitarTab)
                 }
-                if let midiURL {
+                if !pro.gate.allows(.midiExport) {
+                    lockedChip("Share MIDI", feature: .midiExport)
+                } else if let midiURL {
                     ShareLink(item: midiURL, preview: SharePreview("whistler.mid", image: Image(systemName: "music.note"))) {
                         Text("Share MIDI")
                             .font(.system(size: 13, weight: .medium))
@@ -253,6 +305,9 @@ struct RootView: View {
             HStack(spacing: 8) {
                 Text(timeString)
                     .font(.system(size: 13, design: .monospaced))
+                if session.isRecording, let left = RecordingCap.remaining(elapsed: session.elapsed, isPro: pro.isPro) {
+                    Text("· \(Int(left.rounded(.up)))s free")
+                }
                 Text("·")
                 Text(status)
             }
@@ -270,15 +325,22 @@ struct RootView: View {
             HStack(spacing: 8) {
                 ForEach(SourceMode.allCases) { mode in
                     Button {
-                        session.mode = mode
+                        session.select(mode: mode)
                     } label: {
-                        Text(mode.title)
-                            .font(.system(size: 13, weight: .medium))
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 7)
-                            .background(session.mode == mode ? Theme.brass : Theme.ink2, in: Capsule())
-                            .foregroundStyle(session.mode == mode ? Theme.ink : Theme.muted)
+                        HStack(spacing: 4) {
+                            Text(mode.title)
+                            if !pro.gate.allows(mode: mode) {
+                                Image(systemName: "lock.fill")
+                                    .font(.system(size: 9, weight: .bold))
+                            }
+                        }
+                        .font(.system(size: 13, weight: .medium))
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 7)
+                        .background(session.mode == mode ? Theme.brass : Theme.ink2, in: Capsule())
+                        .foregroundStyle(session.mode == mode ? Theme.ink : Theme.muted)
                     }
+                    .accessibilityLabel(pro.gate.allows(mode: mode) ? mode.title : "\(mode.title), Pro")
                     .disabled(session.isRecording)
                 }
             }
@@ -299,6 +361,38 @@ struct RootView: View {
         .padding(.bottom, 4)
         .frame(maxWidth: .infinity)
         .background(Theme.ink)
+    }
+
+    private var paywallBinding: Binding<PaywallTrigger?> {
+        Binding(
+            get: { session.paywallTrigger },
+            set: { session.paywallTrigger = $0 }
+        )
+    }
+
+    private func showPaywall(_ reason: PaywallTrigger.Reason) {
+        session.paywallTrigger = PaywallTrigger(reason: reason)
+    }
+
+    private func lockedChip(_ title: String, feature: ProFeature) -> some View {
+        Button {
+            showPaywall(.feature(feature))
+        } label: {
+            HStack(spacing: 6) {
+                Text(title)
+                Image(systemName: "lock.fill")
+                    .font(.system(size: 10, weight: .bold))
+                    .foregroundStyle(Theme.brass)
+            }
+            .font(.system(size: 13, weight: .medium))
+            .padding(.horizontal, 14)
+            .padding(.vertical, 8)
+            .frame(maxWidth: .infinity)
+            .background(Theme.ink2, in: Capsule())
+            .foregroundStyle(Theme.paper.opacity(0.7))
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel("\(title), Pro")
     }
 
     private func chip(_ title: String, action: @escaping () -> Void) -> some View {
