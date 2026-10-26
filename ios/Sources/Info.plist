@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Whistler</string>
+	<string>Whistle Mapper</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
